@@ -1,7 +1,7 @@
 {
   "name": "RPA Email Automation",
   "projectId": "70c3aebd-cf7c-4cc7-af3a-469fb230c4c7",
-  "description": "RPA Email Automation with Any Methods",
+  "description": "RPA email automation with any methods",
   "main": "Main.xaml",
   "dependencies": {
     "UiPath.Excel.Activities": "[2.22.0-preview]",
