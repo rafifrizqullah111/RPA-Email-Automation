@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="944,2254" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System.Net.Mail" xmlns:ss="clr-namespace:System.Security;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="944,3287" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System.Net.Mail" xmlns:ss="clr-namespace:System.Security;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -116,9 +116,13 @@
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="561,2189" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="561,3222" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="str_asset" />
       <Variable x:TypeArguments="x:String" Name="email_username" />
@@ -137,6 +141,8 @@
       <Variable x:TypeArguments="sd:DataTable" Name="dt_mail_account" />
       <Variable x:TypeArguments="x:String" Name="str_name_file" />
       <Variable x:TypeArguments="x:Int32" Name="idx" />
+      <Variable x:TypeArguments="x:String" Name="str_subject_mail" />
+      <Variable x:TypeArguments="x:String" Name="str_body_mail" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -211,10 +217,15 @@
               <InArgument x:TypeArguments="x:String">email_extraction.xlsx</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
-          <ui:AssignOperation Value="{x:Null}" sap2010:WorkflowViewState.IdRef="AssignOperation_17">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
             <ui:AssignOperation.To>
               <OutArgument x:TypeArguments="x:String">[str_recipient_mail]</OutArgument>
             </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">
+                <Literal x:TypeArguments="x:String" Value="" />
+              </InArgument>
+            </ui:AssignOperation.Value>
           </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
@@ -313,7 +324,7 @@
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence x:Key="IMAP Mails" DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,258" sap2010:WorkflowViewState.IdRef="Sequence_5">
+      <Sequence x:Key="IMAP Mails" DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,259" sap2010:WorkflowViewState.IdRef="Sequence_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -321,7 +332,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <ui:GetIMAPMailMessages ClientName="{x:Null}" ClientVersion="{x:Null}" FilterExpression="{x:Null}" Password="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" DeleteMessages="False" Email="[email_username]" EnableSSL="True" FilterExpressionCharacterSet="US-ASCII" sap:VirtualizedContainerService.HintSize="434,25" sap2010:WorkflowViewState.IdRef="GetIMAPMailMessages_3" IgnoreCRL="False" MailFolder="Inbox" MarkAsRead="False" Messages="[email_inbox]" OnlyUnreadMessages="True" OrderByDate="NewestFirst" Port="[int_port_imap_server]" SecureConnection="Auto" SecurePassword="[email_password]" Server="[str_imap_server]" Top="200" />
-        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_1">
           <Assign.To>
             <OutArgument x:TypeArguments="x:String">[str_input_send]</OutArgument>
           </Assign.To>
@@ -330,14 +341,14 @@
           </Assign.Value>
         </Assign>
       </Sequence>
-      <Sequence x:Key="POP Mails" DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,258" sap2010:WorkflowViewState.IdRef="Sequence_6">
+      <Sequence x:Key="POP Mails" DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,259" sap2010:WorkflowViewState.IdRef="Sequence_6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <ui:GetPOP3MailMessages Password="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" DeleteMessages="False" Email="[email_username]" EnableSSL="False" sap:VirtualizedContainerService.HintSize="434,25" sap2010:WorkflowViewState.IdRef="GetPOP3MailMessages_2" IgnoreCRL="False" Messages="[email_inbox]" Port="[int_port_pop_server]" SecureConnection="Auto" SecurePassword="[email_password]" Server="[str_pop_server]" Top="200" />
-        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_2">
           <Assign.To>
             <OutArgument x:TypeArguments="x:String">[str_input_send]</OutArgument>
           </Assign.To>
@@ -346,31 +357,31 @@
           </Assign.Value>
         </Assign>
       </Sequence>
-      <Sequence x:Key="Outlook Mails" DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,258" sap2010:WorkflowViewState.IdRef="Sequence_7">
+      <Sequence x:Key="Outlook Mails" DisplayName="Do" sap:VirtualizedContainerService.HintSize="496,259" sap2010:WorkflowViewState.IdRef="Sequence_7">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <ui:GetOutlookMailMessages Account="{x:Null}" FilterByMessageIds="{x:Null}" TimeoutMS="{x:Null}" Filter="[&quot;@SQL=urn:schemas:httpmail:subject LIKE '%&quot;+str_filter+&quot;%'&quot;]" GetAttachements="False" sap:VirtualizedContainerService.HintSize="434,25" sap2010:WorkflowViewState.IdRef="GetOutlookMailMessages_2" MailFolder="Inbox" MarkAsRead="False" Messages="[email_inbox]" OnlyUnreadMessages="False" OrderByDate="NewestFirst" Top="200" />
-        <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_3">
+        <Assign sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_3">
           <Assign.To>
             <OutArgument x:TypeArguments="x:String">[str_input_send]</OutArgument>
           </Assign.To>
           <Assign.Value>
-            <InArgument x:TypeArguments="x:String">SMTP Mails</InArgument>
+            <InArgument x:TypeArguments="x:String">Outlook Mails</InArgument>
           </Assign.Value>
         </Assign>
       </Sequence>
     </Switch>
-    <ui:BuildDataTable DataTable="[dt_mail_account]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="499,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;no&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Recipient&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;sender_name&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;sender_email&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;subject_email&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Date&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
-    <ui:ForEach x:TypeArguments="snm:MailMessage" CurrentIndex="[idx]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="499,756" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[email_inbox]">
+    <ui:BuildDataTable DataTable="[dt_mail_account]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="499,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;no&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;recipient&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;sender_name&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;sender_email&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;subject_email&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;date&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+    <ui:ForEach x:TypeArguments="snm:MailMessage" CurrentIndex="[idx]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="499,1026" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[email_inbox]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="snm:MailMessage">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="snm:MailMessage" Name="mail" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="465,570" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="465,840" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="mail_recipient" />
               <Variable x:TypeArguments="x:String" Name="mail_number" />
@@ -438,7 +449,21 @@
                 </scg:List>
               </ui:MultipleAssign.AssignOperations>
             </ui:MultipleAssign>
-            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{mail_number, mail_recipient, mail_sender_name, mail_sender_email, mail_subject, mail_date}]" DataTable="[dt_mail_account]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="423,186" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+            <If Condition="[mail_recipient.Split(&quot;,&quot;c).Count &lt;= 5]" sap:VirtualizedContainerService.HintSize="423,456" sap2010:WorkflowViewState.IdRef="If_2">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="376,274" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{mail_number, mail_recipient, mail_sender_name, mail_sender_email, mail_subject, mail_date}]" DataTable="[dt_mail_account]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="334,186" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_17" />
+              </If.Else>
+            </If>
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
@@ -450,6 +475,113 @@
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
     <ui:WriteRange StartingCell="{x:Null}" AddHeaders="True" DataTable="[dt_mail_account]" DisplayName="Write Range Workbook" sap:VirtualizedContainerService.HintSize="499,116" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="extract" WorkbookPath="[str_name_file]" />
+    <Sequence DisplayName="Email" sap:VirtualizedContainerService.HintSize="499,723" sap2010:WorkflowViewState.IdRef="Sequence_15">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="html_header" />
+        <Variable x:TypeArguments="x:String" Name="html_footer" />
+        <Variable x:TypeArguments="x:String" Name="html_body" />
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="idx_number" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_4">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_subject_mail]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[REPORT] Rekap Inbox</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="434,163" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+        <ui:MultipleAssign.AssignOperations>
+          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[html_header]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String" xml:space="preserve">["&lt;html&gt;
+&lt;style&gt;
+  /* Center the container */
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* Add some basic styling to the table */
+  table {
+    border-collapse: collapse;
+    width: 90%;
+    border: 1px solid #ddd;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+&lt;/style&gt;
+&lt;body&gt;
+
+&lt;h2&gt;Rekap Email Inbox&lt;/h2&gt;
+
+&lt;div class=""center-container""&gt;
+&lt;table style=""width:90%"" table=1&gt;
+  &lt;tr&gt;
+    &lt;th style=""width:5%""&gt;No&lt;/th&gt;
+    &lt;th style=""width:15%""&gt;Recipient&lt;/th&gt;
+	&lt;th style=""width:15%""&gt;Sender Name&lt;/th&gt;
+    &lt;th style=""width:15%""&gt;Sender Email&lt;/th&gt;
+	&lt;th style=""width:25%""&gt;Subject Email&lt;/th&gt;
+	&lt;th style=""width:15%""&gt;Date&lt;/th&gt;
+  &lt;/tr&gt;"]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_19">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[html_footer]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String" xml:space="preserve">["&lt;/table&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;"]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_20">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[html_body]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+          </scg:List>
+        </ui:MultipleAssign.AssignOperations>
+      </ui:MultipleAssign>
+      <ui:InvokeCode ContinueOnError="{x:Null}" Code="For Each row In in_dt_mail_account.AsEnumerable&#xA;&#x9;idx = idx + 1&#xA;&#x9;in_html_body = in_html_body+&quot;&lt;tr&gt;&lt;td&gt;&quot;+idx.ToString+&quot;.&lt;/td&gt;&quot;+&quot;&lt;td&gt;&quot;+row(&quot;recipient&quot;).ToString+&quot;&lt;/td&gt;&quot;+&quot;&lt;td&gt;&quot;+row(&quot;sender_name&quot;).ToString+&quot;&lt;/td&gt;&quot;+&quot;&lt;td&gt;&quot;+row(&quot;sender_email&quot;).ToString+&quot;&lt;/td&gt;&quot;+&quot;&lt;td&gt;&quot;+row(&quot;subject_email&quot;).ToString+&quot;&lt;/td&gt;&quot;+&quot;&lt;td&gt;&quot;+row(&quot;date&quot;).ToString+&quot;&lt;/td&gt;&quot;+&quot;&lt;/tr&gt;&quot;&#xA;Next row" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="434,165" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+        <ui:InvokeCode.Arguments>
+          <InArgument x:TypeArguments="sd:DataTable" x:Key="in_dt_mail_account">[dt_mail_account]</InArgument>
+          <InOutArgument x:TypeArguments="x:String" x:Key="in_html_body">[html_body]</InOutArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="idx">[idx_number]</InArgument>
+        </ui:InvokeCode.Arguments>
+      </ui:InvokeCode>
+      <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_5">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_body_mail]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[html_header+html_body+html_footer]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
     <Switch x:TypeArguments="x:String" DisplayName="Switch Send 'Method'" Expression="[str_input_send]" sap:VirtualizedContainerService.HintSize="499,52" sap2010:WorkflowViewState.IdRef="Switch`1_4">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -457,19 +589,17 @@
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" MailMessage="{x:Null}" Password="{x:Null}" ReplyTo="{x:Null}" Result="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" x:Key="SMTP Mails" Body="Text" Email="[email_username]" EnableSSL="True" From="rpa@bot.com" sap:VirtualizedContainerService.HintSize="334,152" sap2010:WorkflowViewState.IdRef="SendMail_1" IgnoreCRL="False" IsBodyHtml="False" Name="RPA Bot" Port="[int_port_smtp]" SecureConnection="Auto" SecurePassword="[email_password]" Server="[str_smtp_server]" Subject="[REPORT] Rekap Inbox" To="[str_recipient_mail]">
+      <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" MailMessage="{x:Null}" Password="{x:Null}" ReplyTo="{x:Null}" Result="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" x:Key="SMTP Mails" Body="[str_body_mail]" Email="[email_username]" EnableSSL="True" From="rpa@bot.com" sap:VirtualizedContainerService.HintSize="334,152" sap2010:WorkflowViewState.IdRef="SendMail_1" IgnoreCRL="False" IsBodyHtml="True" Name="RPA Bot" Port="[int_port_smtp]" SecureConnection="Auto" SecurePassword="[email_password]" Server="[str_smtp_server]" Subject="[str_subject_mail]" To="[str_recipient_mail]">
         <ui:SendMail.Files>
           <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
             <InArgument x:TypeArguments="x:String">[str_name_file]</InArgument>
           </scg:List>
         </ui:SendMail.Files>
       </ui:SendMail>
-      <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" MailMessage="{x:Null}" ReplyTo="{x:Null}" TimeoutMS="{x:Null}" x:Key="Outlook Mails" Body="Text" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,152" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" Importance="Normal" IsBodyHtml="False" IsDraft="False" Sensitivity="Normal" Subject="[REPORT] Rekap Inbox" To="[str_recipient_mail]">
+      <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" ContinueOnError="{x:Null}" MailMessage="{x:Null}" ReplyTo="{x:Null}" TimeoutMS="{x:Null}" x:Key="Outlook Mails" Body="[str_body_mail]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,152" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" Importance="Normal" IsBodyHtml="True" IsDraft="False" Sensitivity="Personal" Subject="[str_subject_mail]" To="[str_recipient_mail]">
         <ui:SendOutlookMail.Files>
           <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
-            <InArgument x:TypeArguments="x:String">
-              <VisualBasicValue x:TypeArguments="x:String" ExpressionText="str_name_file" />
-            </InArgument>
+            <InArgument x:TypeArguments="x:String">[str_name_file]</InArgument>
           </scg:List>
         </ui:SendOutlookMail.Files>
       </ui:SendOutlookMail>
